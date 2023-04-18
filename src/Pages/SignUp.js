@@ -3,8 +3,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -12,13 +10,17 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import registerUser from '../Store/Auth/register/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import SnackBarSuccess from '../Components/Snackbar/SnackbarSuccess';
+import SnackBarError from '../Components/Snackbar/SnackbarError';
 
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+        UPSITEGUARD
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -29,13 +31,51 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignUp() {
+  const [userData, setUserData] = React.useState({
+    first_name: '',
+    last_name: '',
+    email: '',
+    password1: '',
+    password2: ''
+
+   });
+
+  const dispatch = useDispatch();
+  const registerState = useSelector((state) => state.registerReducer);
+  const [snackBarErrOpen, setSnackBarErrOpen] = React.useState(false);
+  const [snackBarOpenSuccses, setSnackBarOpenSuccses] = React.useState(false);
+
+  const handleChange = (event) => {
+    setUserData({
+      ...userData,
+      [event.target.name]: event.target.value,
+    });
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+    setUserData(new FormData(event.currentTarget))
+    dispatch(registerUser(userData)).then((response) => {
+      if (registerState.error) {
+        setSnackBarErrOpen(true);
+      } else {
+        setSnackBarOpenSuccses(true);
+    }
+  })
+};
+
+  const handleCloseSnackBar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setUserData({
+      username: '',
+      email: '',
+      password: '',
+      confirm_password: '',
     });
+    setSnackBarErrOpen(false);
+    setSnackBarOpenSuccses(false)
   };
 
   return (
@@ -56,12 +96,12 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box component="form" noValidate onSubmit={handleSubmit} onChange={handleChange} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 <TextField
                   autoComplete="given-name"
-                  name="firstName"
+                  name="first_name"
                   required
                   fullWidth
                   id="firstName"
@@ -69,13 +109,13 @@ export default function SignUp() {
                   autoFocus
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
                   id="lastName"
                   label="Last Name"
-                  name="lastName"
+                  name="last_name"
                   autoComplete="family-name"
                 />
               </Grid>
@@ -93,17 +133,22 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
-                  name="password"
+                  name="password1"
                   label="Password"
                   type="password"
-                  id="password"
+                  id="password1"
                   autoComplete="new-password"
                 />
               </Grid>
               <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive inspiration, marketing promotions and updates via email."
+                <TextField
+                  required
+                  fullWidth
+                  name="password2"
+                  label="Confirm password"
+                  type="password"
+                  id="password2"
+                  autoComplete="new-password"
                 />
               </Grid>
             </Grid>
@@ -122,6 +167,16 @@ export default function SignUp() {
                 </Link>
               </Grid>
             </Grid>
+          <SnackBarSuccess
+            open={snackBarOpenSuccses}
+            handleClose={handleCloseSnackBar}
+            message="Registration successful! Please check your email to activate your account."
+          />
+          <SnackBarError
+            open={snackBarErrOpen}
+            handleClose={handleCloseSnackBar}
+            message={registerState.error}
+          />
           </Box>
         </Box>
         <Copyright sx={{ mt: 5 }} />
