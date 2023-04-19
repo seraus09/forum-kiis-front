@@ -14,12 +14,15 @@ import registerUser from '../Store/Auth/register/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import SnackBarSuccess from '../Components/Snackbar/SnackbarSuccess';
 import SnackBarError from '../Components/Snackbar/SnackbarError';
+import { useFormik } from 'formik';
+import SignUpFormValidators from '../Components/Validators/SignUpFormValidators';
 
-function Copyright(props) {
+
+const Copyright =(props)=> {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+    <Typography variant='body2' color='text.secondary' align='center' {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
+      <Link color='inherit' href='https://mui.com/'>
         UPSITEGUARD
       </Link>{' '}
       {new Date().getFullYear()}
@@ -30,53 +33,42 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function SignUp() {
-  const [userData, setUserData] = React.useState({
-    first_name: '',
-    last_name: '',
-    email: '',
-    password1: '',
-    password2: ''
-
-   });
-
+const SignUp =()=> {
   const dispatch = useDispatch();
   const registerState = useSelector((state) => state.registerReducer);
   const [snackBarErrOpen, setSnackBarErrOpen] = React.useState(false);
   const [snackBarOpenSuccses, setSnackBarOpenSuccses] = React.useState(false);
 
-  const handleChange = (event) => {
-    setUserData({
-      ...userData,
-      [event.target.name]: event.target.value,
-    });
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    setUserData(new FormData(event.currentTarget))
-    dispatch(registerUser(userData)).then((response) => {
-      if (registerState.error) {
-        setSnackBarErrOpen(true);
-      } else {
-        setSnackBarOpenSuccses(true);
-    }
-  })
-};
-
   const handleCloseSnackBar = (event, reason) => {
     if (reason === 'clickaway') {
       return;
     }
-    setUserData({
-      username: '',
-      email: '',
-      password: '',
-      confirm_password: '',
-    });
     setSnackBarErrOpen(false);
     setSnackBarOpenSuccses(false)
   };
+
+  const formik = useFormik({
+    initialValues: {
+      first_name: '',
+      last_name: '',
+      email: '',
+      password1: '',
+      password2: ''
+    },
+    validationSchema: SignUpFormValidators,
+    onSubmit: (values) => {
+      dispatch(registerUser(values))
+    },
+  }); 
+
+  React.useEffect(()=> {
+    if (registerState.success) {
+        setSnackBarOpenSuccses(true);
+      } 
+    else if (registerState.error && registerState.error?.length > 0 ) {
+      setSnackBarErrOpen(true);
+      }
+    },[registerState]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -96,10 +88,11 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} onChange={handleChange} sx={{ mt: 3 }}>
+          <Box component="form" noValidate onSubmit={formik.handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
+                  onChange={formik.handleChange}
                   autoComplete="given-name"
                   name="first_name"
                   required
@@ -107,48 +100,62 @@ export default function SignUp() {
                   id="firstName"
                   label="First Name"
                   autoFocus
+                  error={formik.touched.first_name && Boolean(formik.errors.first_name)}
+                  helperText={formik.touched.first_name && formik.errors.first_name}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  onChange={formik.handleChange}
                   required
                   fullWidth
                   id="lastName"
                   label="Last Name"
                   name="last_name"
-                  autoComplete="family-name"
+                  error={formik.touched.last_name && Boolean(formik.errors.last_name)}
+                  helperText={formik.touched.last_name && formik.errors.last_name}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  onChange={formik.handleChange}
                   required
                   fullWidth
                   id="email"
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  error={formik.touched.email && Boolean(formik.errors.email)}
+                  helperText={formik.touched.email && formik.errors.email}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  onChange={formik.handleChange}
                   required
                   fullWidth
                   name="password1"
                   label="Password"
                   type="password"
                   id="password1"
-                  autoComplete="new-password"
+                  autoComplete='new-password'
+                  error={formik.touched.password1 && Boolean(formik.errors.password1)}
+                  helperText={formik.touched.password1 && formik.errors.password1}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  onChange={formik.handleChange}
                   required
                   fullWidth
                   name="password2"
                   label="Confirm password"
                   type="password"
                   id="password2"
-                  autoComplete="new-password"
+                  autoComplete='new-password'
+                  onBlur={formik.handleBlur}
+                  error={formik.touched.password2 && Boolean(formik.errors.password2)}
+                  helperText={formik.touched.password2 && formik.errors.password2}
                 />
               </Grid>
             </Grid>
@@ -167,16 +174,17 @@ export default function SignUp() {
                 </Link>
               </Grid>
             </Grid>
-          <SnackBarSuccess
-            open={snackBarOpenSuccses}
-            handleClose={handleCloseSnackBar}
-            message="Registration successful! Please check your email to activate your account."
-          />
-          <SnackBarError
-            open={snackBarErrOpen}
-            handleClose={handleCloseSnackBar}
-            message={registerState.error}
-          />
+            <SnackBarSuccess
+              open={snackBarOpenSuccses}
+              handleClose={handleCloseSnackBar}
+              message="Registration successful!
+              Please check your email to activate your account."
+            />
+            <SnackBarError
+              open={snackBarErrOpen}
+              handleClose={handleCloseSnackBar}
+              message={registerState.error}
+            />
           </Box>
         </Box>
         <Copyright sx={{ mt: 5 }} />
@@ -184,3 +192,5 @@ export default function SignUp() {
     </ThemeProvider>
   );
 }
+
+export default SignUp;

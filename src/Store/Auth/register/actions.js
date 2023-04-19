@@ -32,7 +32,7 @@ const registerUser = (userData) => {
       const response = await axiosInstance.post('auth/registration/', userData);
       dispatch(registerUserSuccess(response.data));
     } catch (error) {
-      dispatch(registerUserFailure(error.message));
+      dispatch(registerUserFailure(error?.response?.data?.email));
     }
   };
 };

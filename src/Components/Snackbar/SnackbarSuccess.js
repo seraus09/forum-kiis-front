@@ -3,7 +3,7 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 
 const SnackBarSuccess = (props) => {
-const { open, handleClose, message } = props;
+    const { open, handleClose, message } = props;
 
     return (
     <Snackbar 

@@ -4,7 +4,8 @@ import Alert from '@mui/material/Alert';
 
 const SnackBarError = (props) => {
   const { open, handleClose, message } = props;
-    return (
+    
+  return (
     <Snackbar 
       open={open}
       autoHideDuration={4000} 
