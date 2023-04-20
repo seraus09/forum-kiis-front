@@ -14,7 +14,7 @@ const SnackBarError = (props) => {
         vertical: 'bottom',
         horizontal: 'right',
         }}>
-        <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+        <Alert onClose={handleClose} severity="error" sx={{ width: '340px' }}>
             {message}
         </Alert>
     </Snackbar>

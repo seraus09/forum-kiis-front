@@ -8,13 +8,13 @@ const SnackBarSuccess = (props) => {
     return (
     <Snackbar 
         open={open}
-        autoHideDuration={4000} 
+        autoHideDuration={6000} 
         onClose={handleClose}
         anchorOrigin={{ 
           vertical: 'bottom',
           horizontal: 'right',
           }}>
-        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+        <Alert onClose={handleClose} severity="success" sx={{ width: '340px' }}>
             {message}
         </Alert>
     </Snackbar>
