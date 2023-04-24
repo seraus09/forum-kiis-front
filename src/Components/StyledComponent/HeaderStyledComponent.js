@@ -5,8 +5,7 @@ import { styled } from '@mui/material/styles';
 
 export const CostumAppBar = styled(AppBar)(({ theme }) => ({
     background: theme.appBar.bgcolor,
-
-}));
+    }));
 
 export const CostumHeaderContainer = styled(Container)(({ theme }) => ({
     marginLeft: theme.spacing(12.4),

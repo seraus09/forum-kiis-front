@@ -181,7 +181,7 @@ const SignUp =()=> {
                     fontFamily: "Raleway, sans-serif",
                   }}
                   >
-                  Already have an account? Sign in
+                  {"Already have an account? Sign in"}
                 </Link>
               </Grid>
             </Grid>

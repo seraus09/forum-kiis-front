@@ -1,46 +1,66 @@
 import axiosInstance from '../../../config/config'
 import {
-  REGISTER_USER_REQUEST,
-  REGISTER_USER_SUCCESS,
-  REGISTER_USER_FAILURE,
+  LOGIN_USER_REQUEST,
+  LOGIN_USER_SUCCESS,
+  LOGIN_USER_FAILURE,
+  CHECK_TOKEN_SUCCESS,
+  CHECK_TOKEN_FAILURE,
 } from './types';
 
-const registerUserRequest = () => {
+const loginUserRequest = () => {
   return {
-    type: REGISTER_USER_REQUEST,
+    type: LOGIN_USER_REQUEST,
   };
 };
 
-const registerUserSuccess = (data) => {
+const loginUserSuccess = (data) => {
   return {
-    type: REGISTER_USER_SUCCESS,
+    type: LOGIN_USER_SUCCESS,
     payload: data,
   };
 };
 
-const registerUserFailure = (error) => {
+const loginUserFailure = (error) => {
   return {
-    type: REGISTER_USER_FAILURE,
+    type: LOGIN_USER_FAILURE,
     payload: error,
   };
 };
 
-const registerUser = (userData, resetForm) => {
+const checkTokenFailure = (error) => {
+  return {
+    type: CHECK_TOKEN_FAILURE,
+    payload: error,
+  };
+};
+
+const checkTokenSuccess = (data) => {
+  return {
+    type: CHECK_TOKEN_SUCCESS,
+  };
+};
+
+export const loginUser = (userData) => {
   return async (dispatch) => {
-    dispatch(registerUserRequest());
+    dispatch(loginUserRequest());
     try {
-      const response = await axiosInstance.post('auth/registration/', userData);
-      dispatch(registerUserSuccess(response.data));
-      resetForm();
+      const response = await axiosInstance.post('auth/login/', userData);
+      dispatch(loginUserSuccess(response.data));
     } catch (error) {
-      dispatch(registerUserFailure(
-        error?.response?.data?.email || 
-        error?.response?.data?.non_field_errors ||
-        error?.response?.data?.password1 ||
-        'Unexpected error')
+      dispatch(loginUserFailure(
+        error.message || 'Unexpected error')
         );
     }
   };
 };
 
-export default registerUser;
+export const checkToken = (data) => {
+  return async (dispatch) => {
+    try {
+      const response = await axiosInstance.post('auth/token/verify/', data);
+       dispatch(checkTokenSuccess(response.data));
+    } catch (error) {
+      dispatch(checkTokenFailure(error.response.data.code))
+    }
+  };
+};

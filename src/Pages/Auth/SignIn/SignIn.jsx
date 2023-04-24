@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {React, useEffect}from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -15,11 +15,13 @@ import {
 } from '../../../Components/StyledComponent/AuthStyledComponent';
 import AuthPageTheme from '../../../Components/Themes/AuthPageTheme'
 import SignInFormValidators from '../../../Components/Validators/SignInFormValidators';
+import { loginUser } from '../../../Store/Auth/login/actions';
+import { useNavigate } from 'react-router-dom';
 
-
-export default function SignIn() {
+const SignIn=()=> {
   const dispatch = useDispatch();
-  // const registerState = useSelector((state) => state.registerReducer);
+  const navigate = useNavigate();
+  const loginState = useSelector(state => state.loginReducer);
   
   const formik = useFormik({
     initialValues: {
@@ -27,10 +29,15 @@ export default function SignIn() {
       password: '',
     },
     validationSchema: SignInFormValidators,
-    onSubmit: (values, {resetForm}) => {
-      dispatch();
+    onSubmit: (values) => {
+      dispatch(loginUser(values));
     },
   }); 
+  useEffect(()=> {
+    if (loginState.isAuthenticated) {
+        navigate('/dashboard');
+      } 
+    },[loginState.isAuthenticated, navigate]);
   
 
 
@@ -51,6 +58,7 @@ export default function SignIn() {
           </CustomAvatar>
           <Box component="form" onSubmit={formik.handleSubmit} noValidate sx={{ mt: 1 }}>
             <CostumTextField
+              onChange={formik.handleChange}
               margin="normal"
               required
               fullWidth
@@ -63,6 +71,7 @@ export default function SignIn() {
               helperText={formik.touched.email && formik.errors.email}
             />
             <CostumTextField
+              onChange={formik.handleChange}
               margin="normal"
               required
               fullWidth
@@ -110,3 +119,5 @@ export default function SignIn() {
     </ThemeProvider>
   );
 }
+
+export default SignIn;

@@ -3,11 +3,13 @@ import SignIn from './Pages/Auth/SignIn/SignIn';
 import SignUp from './Pages/Auth/SignUp/SignUp';
 import Header from './Components/Header/Header';
 import ResetPassword from './Pages/Auth/ResetPasswords/ResetPassword'
+import HomePage from './Pages/Dashboard/HomePage/HomePage';
 import {
     BrowserRouter as Router,
     Route,
     Routes,
   } from "react-router-dom";
+  import PrivateRoute from './Components/PriveteRoute/PrivateRoute';
 
 const App = ()=> {
     return (    
@@ -18,6 +20,11 @@ const App = ()=> {
                 <Route exact path="/signin" element={<SignIn />} />
                 <Route exact path="/signup" element={<SignUp />} />
                 <Route exact path="/reset-password" element={<ResetPassword />} />
+                <Route exact path='/dashboard' element={
+                    <PrivateRoute>
+                        <HomePage/> 
+                    </PrivateRoute>
+                    } />
             </Routes>
         </Router>
     )
