@@ -51,6 +51,7 @@ const SignUp =()=> {
       dispatch(registerUser(values,resetForm));
     },
   }); 
+  
   useEffect(()=> {
     if (registerState.success) {
         setSnackBarOpenSuccses(true);

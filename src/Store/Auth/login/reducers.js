@@ -48,7 +48,7 @@ import {
           ...state,
           loading: false,
           isAuthenticated: false,
-          error: action.payload?.data?.code,
+          error: action.payload,
           user: '',
           token: null,
           refresh_token: null,

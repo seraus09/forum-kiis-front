@@ -1,7 +1,7 @@
 import {useState} from 'react';
-import { ReactComponent as Logo } from "../../assets/icons/logo.svg";
-import headerTheme from '../Themes/HeaderTheme';
 import { ThemeProvider } from '@mui/material/styles';
+import { useSelector } from 'react-redux';
+
 import { 
   CostumAppBar,
   CostumHeaderSvgIcon,
@@ -9,8 +9,9 @@ import {
   CostumLink,
   CostumMenuBox
  } from '../StyledComponent/HeaderStyledComponent';
-import { useSelector } from 'react-redux';
 import AuthenticatedLinks from './AuthenticatedLinks';
+import { ReactComponent as Logo } from "../../assets/icons/logo.svg";
+import headerTheme from '../Themes/HeaderTheme';
 
  const NavBar = () => {
   const isAuthenticated = useSelector(state => state.loginReducer.isAuthenticated);
@@ -36,11 +37,19 @@ import AuthenticatedLinks from './AuthenticatedLinks';
     <ThemeProvider theme={headerTheme}>
     <CostumAppBar>
       <CostumHeaderContainer maxWidth={false}>
-          <CostumLink href="/">
+         {isAuthenticated ? 
+          <CostumLink href="/dashboard">
             <CostumHeaderSvgIcon 
               component={Logo} 
               inheritViewBox/>
           </CostumLink>
+          : 
+            <CostumLink href="/">
+              <CostumHeaderSvgIcon 
+                component={Logo} 
+                inheritViewBox/>
+            </CostumLink>
+          }
           <CostumMenuBox>
             {isAuthenticated ?
               <AuthenticatedLinks

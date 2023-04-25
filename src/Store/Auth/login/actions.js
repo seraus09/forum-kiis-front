@@ -74,8 +74,11 @@ export const loginUser = (userData) => {
       const response = await axiosInstance.post('auth/login/', userData);
       dispatch(loginUserSuccess(response.data));
     } catch (error) {
+      console.log(error.response.data);
       dispatch(loginUserFailure(
-        error.message || 'Unexpected error')
+        error.response?.data?.non_field_errors ||
+        error.response?.data?.email ||
+         'Unexpected error')
         );
     }
   };
