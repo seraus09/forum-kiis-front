@@ -4,11 +4,13 @@ import {
     LOGIN_USER_FAILURE,
     CHECK_TOKEN_SUCCESS,
     CHECK_TOKEN_FAILURE,
+    REFRESHE_TOKEN_SUCCESS
   } from './types';
   
   const initialState = {
     loading: false,
     token: localStorage.getItem('access_token'),
+    refresh_token: localStorage.getItem('refresh_token'),
     isAuthenticated: false,
     user: '',
     error: '',
@@ -27,6 +29,7 @@ import {
         };
       case LOGIN_USER_SUCCESS:
         localStorage.setItem('access_token', action.payload?.access_token);
+        localStorage.setItem('refresh_token', action.payload?.refresh_token);
         return {
           ...state,
           loading: false,
@@ -34,17 +37,21 @@ import {
           user: action.payload.user,
           error: '',
           token: localStorage.getItem('access_token'),
+          refresh_token: localStorage.getItem('refresh_token')
         };
+     
       case LOGIN_USER_FAILURE:
       case CHECK_TOKEN_FAILURE:
         localStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
         return {
           ...state,
           loading: false,
           isAuthenticated: false,
           error: action.payload?.data?.code,
           user: '',
-          token: null 
+          token: null,
+          refresh_token: null,
           
         };
       case CHECK_TOKEN_SUCCESS:
@@ -52,6 +59,16 @@ import {
           ...state,
           isAuthenticated: true,
           error: ''
+        };
+      
+      case REFRESHE_TOKEN_SUCCESS:
+        localStorage.setItem('access_token', action.payload.access);
+        return {
+          ...state,
+          isAuthenticated: true,
+          error: '',
+          token: localStorage.getItem('access_token'),
+          refresh_token: localStorage.getItem('refresh_token')
         };
 
       default:

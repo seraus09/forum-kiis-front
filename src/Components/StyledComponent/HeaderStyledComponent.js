@@ -2,14 +2,22 @@ import AppBar from '@mui/material/AppBar';
 import Container from '@mui/material/Container';
 import SvgIcon from '@mui/material/SvgIcon';
 import { styled } from '@mui/material/styles';
+import { Link, Box } from '@mui/material';
 
 export const CostumAppBar = styled(AppBar)(({ theme }) => ({
     background: theme.appBar.bgcolor,
+    height: 65,
     }));
 
 export const CostumHeaderContainer = styled(Container)(({ theme }) => ({
+    marginTop: theme.spacing(1.5),
+    display: 'flex',
+    justifyContent: 'space-between',
+    maxWidth: false
+}));
+
+export const CostumLink = styled(Link)(({ theme }) => ({
     marginLeft: theme.spacing(12.4),
-    height: 65,
     [theme.breakpoints.down('md')]: {
         marginLeft: theme.spacing(1.5),
       },
@@ -19,8 +27,17 @@ export const CostumHeaderContainer = styled(Container)(({ theme }) => ({
 }));
 
 export const CostumHeaderSvgIcon = styled(SvgIcon)(({ theme }) => ({
-    marginTop: theme.spacing(1.5),
     width: 200,
     height: 40,
     color: theme.headerLogo.color
+}));
+
+export const CostumMenuBox = styled(Box)(({ theme }) => ({
+    marginRight: theme.spacing(10),
+    [theme.breakpoints.down('md')]: {
+        marginRight: theme.spacing(1.5),
+      },
+    [theme.breakpoints.down('sm')]: {
+        marginRight: theme.spacing(2),
+      },
 }));
