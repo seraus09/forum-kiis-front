@@ -3,11 +3,11 @@ import SignIn from './Pages/Auth/SignIn/SignIn';
 import SignUp from './Pages/Auth/SignUp/SignUp';
 import Header from './Components/Header/Header';
 import ResetPassword from './Pages/Auth/ResetPasswords/ResetPassword'
-import HomePage from './Pages/Dashboard/HomePage/HomePage';
+import HomaPage from './Pages/Dashboard/HomePage/HomaPage';
 import {
     BrowserRouter as Router,
     Route,
-    Routes,
+    Routes, Navigate
   } from "react-router-dom";
   import PrivateRoute from './Components/PriveteRoute/PrivateRoute';
 
@@ -22,9 +22,10 @@ const App = ()=> {
                 <Route exact path="/reset-password" element={<ResetPassword />} />
                 <Route exact path='/dashboard' element={
                     <PrivateRoute>
-                        <HomePage/> 
+                        <HomaPage/> 
                     </PrivateRoute>
                     } />
+                <Route path="*" element={<Navigate to="/" replace />}/>
             </Routes>
         </Router>
     )

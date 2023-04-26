@@ -14,7 +14,13 @@ const SnackBarInfo = (props) => {
           vertical: 'bottom',
           horizontal: 'right',
           }}>
-        <Alert onClose={handleClose} severity="info" sx={{ width: '340px' }}>
+        <Alert 
+            onClose={handleClose} 
+            severity="info" 
+            sx={{ 
+                width: '340px', 
+                bgcolor: '#90e0ef'
+                }}>
             {message}
         </Alert>
     </Snackbar>

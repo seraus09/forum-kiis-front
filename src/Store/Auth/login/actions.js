@@ -58,7 +58,6 @@ const refreshToken = (error, refresh_token) => {
       ) {
         try {
           const response = await axiosInstance.post('auth/token/refresh/', data);
-          console.log(response.data.access)
           dispatch(refreshTokenSuccess(response.data));
         } catch (error) {
           dispatch(checkTokenFailure(error.response))
@@ -74,7 +73,6 @@ export const loginUser = (userData) => {
       const response = await axiosInstance.post('auth/login/', userData);
       dispatch(loginUserSuccess(response.data));
     } catch (error) {
-      console.log(error.response.data);
       dispatch(loginUserFailure(
         error.response?.data?.non_field_errors ||
         error.response?.data?.email ||

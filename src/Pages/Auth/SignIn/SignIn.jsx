@@ -1,16 +1,18 @@
 import {useState, useEffect}from 'react';
-import CssBaseline from '@mui/material/CssBaseline';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import { ThemeProvider } from '@mui/material/styles';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
 
+
+import { loginUser } from '../../../Store/Auth/login/actions';
 import AuthPageTheme from '../../../Components/Themes/AuthPageTheme'
 import SignInFormValidators from '../../../Components/Validators/SignInFormValidators';
-import { loginUser } from '../../../Store/Auth/login/actions';
 import SnackBarError from '../../../Components/Snackbar/SnackbarError';
+import SnackBarInfo from '../../../Components/Snackbar/SnackbarInfo';
 import { 
   CustomContainer, 
   CustomAvatar, 
@@ -24,14 +26,17 @@ const SignIn=()=> {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [snackBarErrOpen, setSnackBarErrOpen] = useState(false);
+  const [snackBarOpenInfo, setSnackBarOpenInfo] = useState(false);
   const loginState = useSelector(state => state.loginReducer);
   const token =  useSelector(state => state.loginReducer.token);
-  
+ 
+
   const handleCloseSnackBar = (event, reason) => {
     if (reason === 'clickaway') {
       return;
     }
     setSnackBarErrOpen(false);
+    setSnackBarOpenInfo(false)
   };
 
   const formik = useFormik({
@@ -52,9 +57,14 @@ const SignIn=()=> {
     else if (loginState.error && loginState.error?.length > 0 ) {
         setSnackBarErrOpen(true);
        } 
+    else if (
+      loginState.error?.status === 401 &&
+      loginState.error?.data.code === 'token_not_valid' &&
+      loginState.error?.data.detail === 'Token is invalid or expired'
+      ) {
+        setSnackBarOpenInfo(true);
+      }
     },[loginState.isAuthenticated, token, loginState.error, navigate]);
-  
-
 
   return (
     <ThemeProvider theme={AuthPageTheme}>
@@ -133,6 +143,11 @@ const SignIn=()=> {
               handleClose={handleCloseSnackBar}
               message={loginState.error}
             />
+            <SnackBarInfo
+                  open={snackBarOpenInfo}
+                  handleClose={handleCloseSnackBar}
+                  message="Your session was expired"
+                />
           </Box>
         </Box>
       </CustomContainer>

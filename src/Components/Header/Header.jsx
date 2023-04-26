@@ -37,7 +37,7 @@ import headerTheme from '../Themes/HeaderTheme';
     <ThemeProvider theme={headerTheme}>
     <CostumAppBar>
       <CostumHeaderContainer maxWidth={false}>
-         {isAuthenticated ? 
+         {isAuthenticated ?
           <CostumLink href="/dashboard">
             <CostumHeaderSvgIcon 
               component={Logo} 

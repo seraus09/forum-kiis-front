@@ -40,8 +40,21 @@ import {
           refresh_token: localStorage.getItem('refresh_token')
         };
      
-      case LOGIN_USER_FAILURE:
       case CHECK_TOKEN_FAILURE:
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
+        return {
+          ...state,
+          loading: false,
+          isAuthenticated: false,
+          error: action.payload,
+          user: '',
+          token: null,
+          refresh_token: null,
+          
+        };
+      
+      case LOGIN_USER_FAILURE:
         localStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
         return {
