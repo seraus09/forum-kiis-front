@@ -5,18 +5,14 @@ import { useEffect } from 'react';
 
 
 const PrivateRoute = ({ children }) => {
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     const token = useSelector(state => state.loginReducer.token);
-    const refresh_token = useSelector(state => state.loginReducer.refresh_token);
-    
-  
-    useEffect(() => {
-        const data = new FormData()
-        data.append('token', token)
-        dispatch(checkToken(data, refresh_token));
-      }, [dispatch, token, refresh_token]);
-
-    if(token && refresh_token){
+    // useEffect(() => {
+    //     const data = new FormData()
+    //     data.append('token', token)
+    //     dispatch(checkToken(data, refresh_token));
+    //   }, [dispatch, token, refresh_token]);
+    if(token){
         return children;
     } 
     else {

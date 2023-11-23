@@ -4,13 +4,10 @@ import { useSelector } from 'react-redux';
 
 import { 
   CostumAppBar,
-  CostumHeaderSvgIcon,
   CostumHeaderContainer,
-  CostumLink,
   CostumMenuBox
  } from '../StyledComponent/HeaderStyledComponent';
 import AuthenticatedLinks from './AuthenticatedLinks';
-import { ReactComponent as Logo } from "../../assets/icons/logo.svg";
 import headerTheme from '../Themes/HeaderTheme';
 
  const NavBar = () => {
@@ -37,19 +34,6 @@ import headerTheme from '../Themes/HeaderTheme';
     <ThemeProvider theme={headerTheme}>
     <CostumAppBar>
       <CostumHeaderContainer maxWidth={false}>
-         {isAuthenticated ?
-          <CostumLink href="/dashboard">
-            <CostumHeaderSvgIcon 
-              component={Logo} 
-              inheritViewBox/>
-          </CostumLink>
-          : 
-            <CostumLink href="/">
-              <CostumHeaderSvgIcon 
-                component={Logo} 
-                inheritViewBox/>
-            </CostumLink>
-          }
           <CostumMenuBox>
             {isAuthenticated ?
               <AuthenticatedLinks

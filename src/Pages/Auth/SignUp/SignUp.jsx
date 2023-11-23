@@ -40,14 +40,14 @@ const SignUp =()=> {
 
   const formik = useFormik({
     initialValues: {
-      first_name: '',
-      last_name: '',
+      firstName: '',
+      lastName: '',
       email: '',
-      password1: '',
-      password2: ''
+      password: '',
     },
     validationSchema: SignUpFormValidators,
     onSubmit: (values, {resetForm}) => {
+      console.log(values)
       dispatch(registerUser(values,resetForm));
     },
   }); 
@@ -91,7 +91,7 @@ const SignUp =()=> {
                 <CostumTextField
                   onChange={formik.handleChange}
                   autoComplete="given-name"
-                  name="first_name"
+                  name="firstName"
                   required
                   fullWidth
                   id="firstName"
@@ -108,7 +108,7 @@ const SignUp =()=> {
                   fullWidth
                   id="lastName"
                   label="Last Name"
-                  name="last_name"
+                  name="lastName"
                   value={formik.values.last_name}
                   error={formik.touched.last_name && Boolean(formik.errors.last_name)}
                   helperText={formik.touched.last_name && formik.errors.last_name}
@@ -133,29 +133,14 @@ const SignUp =()=> {
                   onChange={formik.handleChange}
                   required
                   fullWidth
-                  name="password1"
+                  name="password"
                   label="Password"
                   type="password"
-                  id="password1"
+                  id="password"
                   autoComplete='new-password'
-                  value={formik.values.password1}
-                  error={formik.touched.password1 && Boolean(formik.errors.password1)}
-                  helperText={formik.touched.password1 && formik.errors.password1}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <CostumTextField
-                  onChange={formik.handleChange}
-                  required
-                  fullWidth
-                  name="password2"
-                  label="Confirm password"
-                  type="password"
-                  id="password2"
-                  autoComplete='new-password'
-                  value={formik.values.password2}
-                  error={formik.touched.password2 && Boolean(formik.errors.password2)}
-                  helperText={formik.touched.password2 && formik.errors.password2}
+                  value={formik.values.password}
+                  error={formik.touched.password && Boolean(formik.errors.password)}
+                  helperText={formik.touched.password && formik.errors.password}
                 />
               </Grid>
             </Grid>
@@ -189,8 +174,7 @@ const SignUp =()=> {
             <SnackBarSuccess
               open={snackBarOpenSuccses}
               handleClose={handleCloseSnackBar}
-              message="Registration successful!
-              Please check your email to activate your account."
+              message="Registration successful!"
             />
             <SnackBarError
               open={snackBarErrOpen}

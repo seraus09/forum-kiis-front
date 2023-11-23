@@ -29,16 +29,18 @@ const registerUser = (userData, resetForm) => {
   return async (dispatch) => {
     dispatch(registerUserRequest());
     try {
-      const response = await axiosInstance.post('auth/registration/', userData);
+      const response = await axiosInstance.post('api/register', userData);
       dispatch(registerUserSuccess(response.data));
       resetForm();
     } catch (error) {
-      dispatch(registerUserFailure(
-        error?.response?.data?.email || 
-        error?.response?.data?.non_field_errors ||
-        error?.response?.data?.password1 ||
-        'Unexpected error')
-        );
+      if (error?.response?.data?.violations[0]?.property === 'email') {
+        dispatch(registerUserFailure('The email already exists'))
+      }
+      else {
+        dispatch(registerUserFailure('Unexpected error'))
+      }
+      
+      
     }
   };
 };

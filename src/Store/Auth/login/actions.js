@@ -70,7 +70,8 @@ export const loginUser = (userData) => {
   return async (dispatch) => {
     dispatch(loginUserRequest());
     try {
-      const response = await axiosInstance.post('auth/login/', userData);
+      const response = await axiosInstance.post('api/login', userData);
+      console.log(response.data)
       dispatch(loginUserSuccess(response.data));
     } catch (error) {
       dispatch(loginUserFailure(

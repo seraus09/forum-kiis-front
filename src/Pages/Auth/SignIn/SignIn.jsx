@@ -52,7 +52,7 @@ const SignIn=()=> {
   
   useEffect(()=> {
     if (loginState.isAuthenticated || token) {
-        navigate('/dashboard');
+        navigate('/forum');
       }
     else if (loginState.error && loginState.error?.length > 0 ) {
         setSnackBarErrOpen(true);
@@ -122,12 +122,12 @@ const SignIn=()=> {
               marginBottom={2}
               marginLeft={1}>
               <Grid item >
-                <CostumLink 
+                {/* <CostumLink 
                   href="/reset-password" 
                   variant="body2"
                   >
                   {"Forgot password?"}
-                </CostumLink>
+                </CostumLink> */}
               </Grid>
               <Grid item>
                 <CostumLink 

@@ -20,7 +20,7 @@ const App = ()=> {
                 <Route exact path="/signin" element={<SignIn />} />
                 <Route exact path="/signup" element={<SignUp />} />
                 <Route exact path="/reset-password" element={<ResetPassword />} />
-                <Route exact path='/dashboard' element={
+                <Route exact path='/forum' element={
                     <PrivateRoute>
                         <HomaPage/> 
                     </PrivateRoute>

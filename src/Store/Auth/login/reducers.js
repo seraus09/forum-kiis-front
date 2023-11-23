@@ -9,10 +9,8 @@ import {
   
   const initialState = {
     loading: false,
-    token: localStorage.getItem('access_token'),
-    refresh_token: localStorage.getItem('refresh_token'),
+    token: localStorage.getItem('token'),
     isAuthenticated: false,
-    user: '',
     error: '',
   };
   
@@ -25,48 +23,42 @@ import {
           isAuthenticated: false,
           token: null, 
           error: '',
-          user: '',
+    
         };
       case LOGIN_USER_SUCCESS:
-        localStorage.setItem('access_token', action.payload?.access_token);
-        localStorage.setItem('refresh_token', action.payload?.refresh_token);
+        localStorage.setItem('token', action.payload?.token);
         return {
           ...state,
           loading: false,
           isAuthenticated: true,
           user: action.payload.user,
           error: '',
-          token: localStorage.getItem('access_token'),
-          refresh_token: localStorage.getItem('refresh_token')
+          token: localStorage.getItem('token'),
         };
      
       case CHECK_TOKEN_FAILURE:
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('refresh_token');
+        localStorage.removeItem('token');
         return {
           ...state,
           loading: false,
           isAuthenticated: false,
           error: action.payload,
-          user: '',
+    
           token: null,
           refresh_token: null,
           
         };
       
       case LOGIN_USER_FAILURE:
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('refresh_token');
+        localStorage.removeItem('token');
         return {
           ...state,
           loading: false,
           isAuthenticated: false,
           error: action.payload,
-          user: '',
           token: null,
           refresh_token: null,
-          
-        };
+          };
       case CHECK_TOKEN_SUCCESS:
         return {
           ...state,
@@ -75,13 +67,12 @@ import {
         };
       
       case REFRESHE_TOKEN_SUCCESS:
-        localStorage.setItem('access_token', action.payload.access);
+        localStorage.setItem('token', action.payload.token);
         return {
           ...state,
           isAuthenticated: true,
           error: '',
-          token: localStorage.getItem('access_token'),
-          refresh_token: localStorage.getItem('refresh_token')
+          token: localStorage.getItem('token'),
         };
 
       default:
