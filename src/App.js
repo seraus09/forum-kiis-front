@@ -3,7 +3,7 @@ import SignIn from './Pages/Auth/SignIn/SignIn';
 import SignUp from './Pages/Auth/SignUp/SignUp';
 import Header from './Components/Header/Header';
 import ResetPassword from './Pages/Auth/ResetPasswords/ResetPassword'
-import HomaPage from './Pages/Dashboard/HomePage/HomaPage';
+import HomePage from './Pages/Dashboard/HomePage/HomePage';
 import {
     BrowserRouter as Router,
     Route,
@@ -22,7 +22,7 @@ const App = ()=> {
                 <Route exact path="/reset-password" element={<ResetPassword />} />
                 <Route exact path='/forum' element={
                     <PrivateRoute>
-                        <HomaPage/> 
+                        <HomePage/> 
                     </PrivateRoute>
                     } />
                 <Route path="*" element={<Navigate to="/" replace />}/>

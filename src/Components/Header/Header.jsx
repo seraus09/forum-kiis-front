@@ -11,7 +11,8 @@ import AuthenticatedLinks from './AuthenticatedLinks';
 import headerTheme from '../Themes/HeaderTheme';
 
  const NavBar = () => {
-  const isAuthenticated = useSelector(state => state.loginReducer.isAuthenticated);
+  // const isAuthenticated = useSelector(state => state.loginReducer.isAuthenticated);
+  const isAuthenticated = true
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 

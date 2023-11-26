@@ -74,9 +74,9 @@ export const loginUser = (userData) => {
       console.log(response.data)
       dispatch(loginUserSuccess(response.data));
     } catch (error) {
+      console.log(error.response?.data?.message)
       dispatch(loginUserFailure(
-        error.response?.data?.non_field_errors ||
-        error.response?.data?.email ||
+        error.response?.data?.message ||
          'Unexpected error')
         );
     }

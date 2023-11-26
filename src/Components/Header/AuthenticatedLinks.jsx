@@ -5,7 +5,7 @@ import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['Logout'];
 
 const stringToColor =(string)=> {
     let hash = 0;

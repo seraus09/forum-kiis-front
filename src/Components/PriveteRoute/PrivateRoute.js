@@ -12,7 +12,7 @@ const PrivateRoute = ({ children }) => {
     //     data.append('token', token)
     //     dispatch(checkToken(data, refresh_token));
     //   }, [dispatch, token, refresh_token]);
-    if(token){
+    if(token) {
         return children;
     } 
     else {

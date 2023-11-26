@@ -3,7 +3,6 @@ import Container from '@mui/material/Container';
 import SvgIcon from '@mui/material/SvgIcon';
 import { styled } from '@mui/material/styles';
 import { Link, Box } from '@mui/material';
-import zIndex from '@mui/material/styles/zIndex';
 
 export const CostumAppBar = styled(AppBar)(({ theme }) => ({
     background: theme.appBar.bgcolor,
@@ -13,7 +12,7 @@ export const CostumAppBar = styled(AppBar)(({ theme }) => ({
 export const CostumHeaderContainer = styled(Container)(({ theme }) => ({
     marginTop: theme.spacing(1.5),
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
     maxWidth: false
 }));
 
