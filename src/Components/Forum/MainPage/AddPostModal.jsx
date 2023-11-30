@@ -7,7 +7,7 @@ import DialogActions from '@mui/material/DialogActions';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import TextField from '@mui/material/TextField';
 import { useDispatch, useSelector } from 'react-redux';
-// import { createPost } from '../../../Store/Forum/mainPage/actions';
+import { createPost } from '../../../Store/Forum/mainPage/actions';
 
 const AddPostModal = () => {
   const dispatch = useDispatch();
@@ -21,7 +21,7 @@ const AddPostModal = () => {
   };
 
   const handleCreatePost = () => {
-    // dispatch(createPost(token, newPost));
+    dispatch(createPost(token, newPost));
     setIsModalOpen(false);
     // Clear the form fields when the modal is closed
     setNewPost({ title: '', content: '' });

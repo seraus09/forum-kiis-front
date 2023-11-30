@@ -3,6 +3,9 @@ import {
    POST_REQUEST,
    POST_SUCCESS,
    POST_FAILURE,
+   ADD_POST_REQUEST,
+   ADD_POST_SUCCESS,
+   ADD_POST_FAILURE,
   } from './types';
 
 
@@ -26,6 +29,26 @@ const postFailure = (error) => {
     };
   };
 
+const AddPostRequest = () => {
+    return {
+      type: ADD_POST_REQUEST,
+    };
+  };
+  
+const AddPostSuccess = (data) => {
+    return {
+      type: ADD_POST_SUCCESS,
+      payload: data,
+    };
+  };
+  
+const AddPostFailure = (error) => {
+    return {
+      type: ADD_POST_FAILURE,
+      payload: error,
+    };
+  };
+
 export const getPosts = (token) => {
     return async (dispatch) => {
       dispatch(postRequest());
@@ -38,6 +61,23 @@ export const getPosts = (token) => {
         dispatch(postSuccess(response.data));
       } catch (error) {
         dispatch(postFailure('Unexpected error'));
+      }
+    };
+  };
+
+export const createPost = (token, newPost) => {
+    return async (dispatch) => {
+      dispatch(AddPostRequest);
+      try {
+        const response = await axiosInstance.post('api/posts', 
+            {   
+                headers: {
+                    'Authorization': 'Bearer ' + token
+          }}, newPost);
+        console.log(response.data)
+        dispatch(AddPostSuccess(response.data));
+      } catch (error) {
+        dispatch(AddPostFailure('Unexpected error'));
       }
     };
   };
