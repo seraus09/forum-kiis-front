@@ -12,6 +12,16 @@ import PostRating from '../../Rating/Rating';
 import { getPosts } from '../../../Store/Forum/mainPage/actions';
 import AddPostModal from './AddPostModal';
 
+const MAX_CONTENT_LENGTH = 150; // Adjust as needed
+
+const truncateText = (text, maxLength) => {
+  if (text.length <= maxLength) {
+    return text;
+  }
+  return text.substring(0, maxLength) + '...';
+};
+
+
 const Main = () => {
     
     const dispatch = useDispatch();
@@ -23,13 +33,7 @@ const Main = () => {
         dispatch(getPosts(token));
        
       }, [dispatch, token]);
-    
-    const handleAddPost = () => {
-        // Add your logic for handling the "Add Post" button click
-        console.log("Add Post button clicked");
-      };
 
-      
     return (
         <Box>
         <Box
@@ -61,7 +65,7 @@ const Main = () => {
                    {post.title}
                 </Typography>
                 <Typography variant="body2">
-                    {post.content}
+                {truncateText(post.content, MAX_CONTENT_LENGTH)}
                 </Typography>
             </CardContent>
             <CardActions sx={{

@@ -23,13 +23,11 @@ const AddPostModal = () => {
   const handleCreatePost = () => {
     dispatch(createPost(token, newPost));
     setIsModalOpen(false);
-    // Clear the form fields when the modal is closed
     setNewPost({ title: '', content: '' });
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
-    // Clear the form fields when the modal is closed
     setNewPost({ title: '', content: '' });
   };
 

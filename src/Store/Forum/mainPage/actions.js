@@ -69,12 +69,11 @@ export const createPost = (token, newPost) => {
     return async (dispatch) => {
       dispatch(AddPostRequest);
       try {
-        const response = await axiosInstance.post('api/posts', 
-            {   
-                headers: {
-                    'Authorization': 'Bearer ' + token
-          }}, newPost);
-        console.log(response.data)
+        const response = await axiosInstance.post('api/posts', newPost, {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        });
         dispatch(AddPostSuccess(response.data));
       } catch (error) {
         dispatch(AddPostFailure('Unexpected error'));
