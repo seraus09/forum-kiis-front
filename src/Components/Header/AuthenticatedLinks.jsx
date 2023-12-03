@@ -4,6 +4,8 @@ import Menu from '@mui/material/Menu';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+import { useDispatch, useSelector } from 'react-redux';
+import { logoutUser } from '../../Store/Auth/logout/actions';
 
 const settings = ['Logout'];
 
@@ -31,10 +33,16 @@ const stringAvatar =(name)=> {
   }
   
 const AuthenticatedLinks = (props) => {
+    const dispatch = useDispatch();
+    const token = useSelector((state) => state.loginReducer.token);
     const {
             handleOpenUserMenu, 
             handleCloseUserMenu,
             anchorElUser } = props
+
+    const handleLogoutClick = () => {
+              dispatch(logoutUser(token))
+            };
     return (
         <>
             <Tooltip>
@@ -59,7 +67,7 @@ const AuthenticatedLinks = (props) => {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem key={setting} onClick={handleLogoutClick}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}

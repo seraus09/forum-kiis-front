@@ -7,8 +7,9 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
-import PostRating from '../../Rating/Rating';
+import { useNavigate } from 'react-router-dom';
 
+import PostRating from '../../Rating/Rating';
 import { getPosts } from '../../../Store/Forum/mainPage/actions';
 import AddPostModal from './AddPostModal';
 
@@ -28,13 +29,18 @@ const Main = () => {
     const token =  useSelector(state => state.loginReducer.token);
     const postsData = useSelector(state => state.postReducer?.posts);
     const posts = postsData?.posts
+    const navigate = useNavigate();
     
     React.useEffect(() => {
         dispatch(getPosts(token));
        
       }, [dispatch, token]);
-
-    return (
+    
+    const handlePostClick = (postId) => {
+        navigate(`/forum/post/${postId}`);
+      };
+    
+      return (
         <Box>
         <Box
             display="flex"
@@ -72,7 +78,7 @@ const Main = () => {
                 display: 'flex',
                 justifyContent: "space-between"
             }}>
-                <Button size="small">Read More</Button>
+                <Button size="small" onClick={() => handlePostClick(post.id)}>Read More</Button>
                 <PostRating rating={post.rating}/>
             </CardActions>
             </Card>

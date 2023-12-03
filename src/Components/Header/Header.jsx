@@ -1,6 +1,5 @@
 import {useState} from 'react';
 import { ThemeProvider } from '@mui/material/styles';
-import { useSelector } from 'react-redux';
 
 import { 
   CostumAppBar,
@@ -9,10 +8,10 @@ import {
  } from '../StyledComponent/HeaderStyledComponent';
 import AuthenticatedLinks from './AuthenticatedLinks';
 import headerTheme from '../Themes/HeaderTheme';
+import { useSelector } from 'react-redux';
 
  const NavBar = () => {
-  // const isAuthenticated = useSelector(state => state.loginReducer.isAuthenticated);
-  const isAuthenticated = true
+  const isAuthenticated = useSelector(state => state.loginReducer.isAuthenticated);
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -30,6 +29,8 @@ import headerTheme from '../Themes/HeaderTheme';
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+
 
   return (
     <ThemeProvider theme={headerTheme}>

@@ -4,6 +4,7 @@ import SignUp from './Pages/Auth/SignUp/SignUp';
 import Header from './Components/Header/Header';
 import ResetPassword from './Pages/Auth/ResetPasswords/ResetPassword'
 import HomePage from './Pages/Dashboard/HomePage/HomePage';
+import ShowPost from './Pages/Dashboard/ShowPost/ShowPost';
 import {
     BrowserRouter as Router,
     Route,
@@ -23,6 +24,11 @@ const App = ()=> {
                 <Route exact path='/forum' element={
                     <PrivateRoute>
                         <HomePage/> 
+                    </PrivateRoute>
+                    } />
+                <Route exact path='/forum/post/:postId' element={
+                    <PrivateRoute>
+                        <ShowPost/> 
                     </PrivateRoute>
                     } />
                 <Route path="*" element={<Navigate to="/" replace />}/>

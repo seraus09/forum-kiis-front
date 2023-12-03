@@ -67,7 +67,7 @@ export const getPosts = (token) => {
 
 export const createPost = (token, newPost) => {
     return async (dispatch) => {
-      dispatch(AddPostRequest);
+      dispatch(AddPostRequest());
       try {
         const response = await axiosInstance.post('api/posts', newPost, {
             headers: {
@@ -75,6 +75,7 @@ export const createPost = (token, newPost) => {
             }
         });
         dispatch(AddPostSuccess(response.data));
+        window.location.reload()
       } catch (error) {
         dispatch(AddPostFailure('Unexpected error'));
       }
