@@ -11,8 +11,7 @@ import headerTheme from '../Themes/HeaderTheme';
 import { useSelector } from 'react-redux';
 
  const NavBar = () => {
-  // const isAuthenticated = useSelector(state => state.loginReducer.isAuthenticated);
-  cost isAuthenticated = false
+  const isAuthenticated = useSelector(state => state.loginReducer.isAuthenticated);
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 

@@ -1,6 +1,6 @@
 import { createTheme } from '@mui/material/styles';
 
-let DashBoardTheme = createTheme({
+const DashBoardTheme = createTheme({
   palette: {
     primary: {
       light: '#63ccff',
