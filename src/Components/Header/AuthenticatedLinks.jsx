@@ -9,6 +9,8 @@ import { logoutUser } from '../../Store/Auth/logout/actions';
 
 const settings = ['Logout'];
 
+const test = 'fff'
+
 const stringToColor =(string)=> {
     let hash = 0;
     let i;
